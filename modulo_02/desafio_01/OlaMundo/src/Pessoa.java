@@ -1,7 +1,7 @@
 public class Pessoa {
     String mensagem = "Hello, World!";	
 
-    void exibeMenssagem() {
+    void exibeMensagem() {
         System.out.println(mensagem);
     }
 }
