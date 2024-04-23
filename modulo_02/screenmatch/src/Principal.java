@@ -1,4 +1,6 @@
+import br.com.alura.screenmach.calculos.CalculadoraDeTempo;
 import br.com.alura.screenmach.modelos.Filme;
+import br.com.alura.screenmach.modelos.Serie;
 
 public class Principal {
     public static void main(String[] args) {
@@ -7,18 +9,38 @@ public class Principal {
         meuFilme.setGenero("Drama");;
         meuFilme.setAnoDeLancamento(1972);
         meuFilme.setIncluidoNoPlano(true);
-
-
-
-        meuFilme.exibeFichaRTecnica();
-
         meuFilme.avalia(8);
         meuFilme.avalia(5);
         meuFilme.avalia(10);
 
-        System.out.println ("Total de avaliacoes: " + meuFilme.getTotalDeAvaliacoes());
-        System.out.println (meuFilme.mediaDasAvaliacoes());
 
+        meuFilme.exibeFichaRTecnica();
+
+
+
+        System.out.println("");
+
+        Serie lost = new Serie();
+        lost.setNome("Lost");
+        lost.setGenero("Terror");
+        lost.setAnoDeLancamento(2010);
+        lost.setIncluidoNoPlano(true);
+        lost.setTemporadas(3);
+        lost.setEpisodiosPorTemporada(10);
+        lost.setMinutosPorEpisodio(22);
+        lost.setAtiva(true);    
+        lost.avalia(10);
+        lost.avalia(5);    
+        lost.avalia(8);
+
+        lost.exibeFichaRTecnica();
+
+
+
+
+        CalculadoraDeTempo calculadora = new CalculadoraDeTempo();
+        calculadora.inclui(lost);
+        
+        System.out.println( "Total em Minutos: " + calculadora.getTempoTotal());
     }
-
 }
