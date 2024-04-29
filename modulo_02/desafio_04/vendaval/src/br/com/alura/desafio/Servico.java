@@ -1,5 +1,6 @@
 package br.com.alura.desafio;
 
+
 public class Servico implements Vendaval {
     private String descricao;
     private double precoHora;
