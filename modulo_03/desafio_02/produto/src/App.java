@@ -1,16 +1,13 @@
-import br.com.alura.screenmatch.calculos.*;
-import br.com.alura.desafio.ProdutoPerecivel;
-
+import br.com.alura.desafio.Produto;
 import java.util.ArrayList;
 
 public class App {
         public static void main(String[] args) {
         ArrayList<Produto> listaProdutos = new ArrayList<>();
 
-        ProdutoPerecivel produtoPerecivel = new ProdutoPerecivel("Produto C", 12.75, 2, "2023-12-31");
-        System.out.println(produtoPerecivel);
+    
 
-
+        
         Produto produto1 = new Produto("Sabão", 15.99, 5);
         Produto produto2 = new Produto("Detergente", 10.49, 8);
         
