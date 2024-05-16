@@ -12,4 +12,12 @@ public class FiltroRecomendacao {
             System.out.println("Coloque na sua lista para assistir depois");
         }
     }
+
+    public String getRecomendacao() {
+        return recomendacao;
+    }
+
+    public void setRecomendacao(String recomendacao) {
+        this.recomendacao = recomendacao;
+    }
 }
