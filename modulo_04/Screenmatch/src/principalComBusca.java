@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import br.com.alura.screenmatch.modelos.TituloOmdb;
+import br.com.alura.screenmatch.excecao.ErroDeConversaoDeAnoException;
 import br.com.alura.screenmatch.modelos.Titulo;
 
 public class principalComBusca {
@@ -21,8 +22,8 @@ public class principalComBusca {
         var busca = leitor.nextLine();
 
 
-        String endereco = "http://www.omdbapi.com/?t=" + busca + "&apikey=b54ed546";
-
+        String endereco = "http://www.omdbapi.com/?t=" + busca.replace(" ","+") + "&apikey=b54ed546";
+        try {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
              .uri(URI.create(endereco))
@@ -38,12 +39,19 @@ public class principalComBusca {
                 TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
                 System.out.println(meuTituloOmdb);
 
-                try {
+                //try {
                     Titulo meuTitulo = new Titulo(meuTituloOmdb);
                     System.out.println(meuTitulo);
-                } catch(NumberFormatException ex) {
-                    System.out.println("Aconteceu um erro:" + ex.getMessage());
-                }
-    
+                    }catch(ErroDeConversaoDeAnoException e) {
+                    System.out.println("Aconteceu um erro: " + e.getMessage());
+                    } catch(NumberFormatException e) {
+                        System.out.println("Aconteceu um erro: " + e.getMessage());
+                    } catch(IllegalArgumentException e){
+                        System.out.println("Aconteceu um erro: ");
+                    } catch(Exception e) {
+                        System.out.println("Aconteceu um erro: " + e.getMessage());
+                    }
     }   
 }
+
+
