@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -42,6 +43,12 @@ public class principalComBusca {
                 //try {
                     Titulo meuTitulo = new Titulo(meuTituloOmdb);
                     System.out.println(meuTitulo);
+
+                    FileWriter escritor = new FileWriter("filmes.csv", true);
+                    escritor.write(meuTitulo.toString() + "\n");
+                    escritor.close();
+
+
                     }catch(ErroDeConversaoDeAnoException e) {
                     System.out.println("Aconteceu um erro: " + e.getMessage());
                     } catch(NumberFormatException e) {
