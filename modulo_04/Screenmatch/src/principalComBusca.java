@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.google.gson.FieldNamingPolicy;
@@ -18,9 +20,21 @@ public class principalComBusca {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Scanner leitor = new Scanner(System.in);
-        System.out.println("O que deseja pesquisar?");
-        var busca = leitor.nextLine();
+        Scanner leitura = new Scanner(System.in);
+        String busca = "";
+
+        List<Titulo> titulos = new ArrayList<>();
+
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).setPrettyPrinting().create();
+
+        while (!busca.equalsIgnoreCase("sair")) {	
+        System.out.println("Digite um filme para buscar:");
+        busca = leitura.nextLine();
+
+
+        if(busca.equalsIgnoreCase("sair")) {
+            break;
+        }
 
 
         String endereco = "http://www.omdbapi.com/?t=" + busca.replace(" ","+") + "&apikey=b54ed546";
@@ -36,7 +50,7 @@ public class principalComBusca {
                 String json = response.body();
                 System.out.println(json);
 
-                Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+
                 TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
                 System.out.println(meuTituloOmdb);
 
@@ -44,10 +58,7 @@ public class principalComBusca {
                     Titulo meuTitulo = new Titulo(meuTituloOmdb);
                     System.out.println(meuTitulo);
 
-                    FileWriter escritor = new FileWriter("filmes.csv", true);
-                    escritor.write(meuTitulo.toString() + "\n");
-                    escritor.close();
-
+                    titulos.add(meuTitulo);
 
                     }catch(ErroDeConversaoDeAnoException e) {
                     System.out.println("Aconteceu um erro: " + e.getMessage());
@@ -58,6 +69,16 @@ public class principalComBusca {
                     } catch(Exception e) {
                         System.out.println("Aconteceu um erro: " + e.getMessage());
                     }
+
+
+                }
+                System.out.println(titulos);
+
+
+                FileWriter escrita = new FileWriter("filmes.json");
+                escrita.write(gson.toJson(titulos));
+                escrita.close();
+                System.out.println("Finalizou corretamente!");
     }   
 }
 
