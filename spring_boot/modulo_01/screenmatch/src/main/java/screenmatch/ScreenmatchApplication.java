@@ -1,11 +1,15 @@
 package screenmatch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import screenmatch.model.DataEpisode;
 import screenmatch.model.DataSeries;
+import screenmatch.model.DataSeason;
 import screenmatch.service.ConsumeApi;
 import screenmatch.service.ConvertData;
 
@@ -18,8 +22,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-    	var consumoApi = new ConsumeApi();
-   		var json = consumoApi.getData("https://www.omdbapi.com/?t=gilmore+girls&apikey=b54ed546");
+    	var consumeApi = new ConsumeApi();
+   		var json = consumeApi.getData("https://www.omdbapi.com/?t=gilmore+girls&apikey=b54ed546");
     	// System.out.println(json);
 
 
@@ -27,9 +31,18 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		DataSeries data = convertData.getData(json, DataSeries.class);
 		System.out.println(data);
 
-		json = consumoApi.getData("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=b54ed546");	
-		DataEpisode dadosEpisode = convertData.getData(json, DataEpisode.class);
-		System.out.println(dadosEpisode);
+		json = consumeApi.getData("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=b54ed546");	
+		DataEpisode dataEpisode = convertData.getData(json, DataEpisode.class);
+		System.out.println(dataEpisode);
+
+		List<DataSeason> seasons = new ArrayList<>();
+
+		for (int i = 1; i <= data.totalSeasons(); i++) {
+	  	json = consumeApi.getData("https://www.omdbapi.com/?t=gilmore+girls&season=" + i + "&apikey=6585022c");
+		  DataSeason dataSeason = convertData.getData(json, DataSeason.class);
+		  seasons.add(dataSeason);
+		}
+		seasons.forEach(System.out::println);
 	}
 
 }
