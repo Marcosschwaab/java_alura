@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import screenmatch.model.DataEpisode;
 import screenmatch.model.DataSeries;
 import screenmatch.service.ConsumeApi;
 import screenmatch.service.ConvertData;
@@ -26,6 +27,9 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		DataSeries data = convertData.getData(json, DataSeries.class);
 		System.out.println(data);
 
+		json = consumoApi.getData("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=b54ed546");	
+		DataEpisode dadosEpisode = convertData.getData(json, DataEpisode.class);
+		System.out.println(dadosEpisode);
 	}
 
 }
