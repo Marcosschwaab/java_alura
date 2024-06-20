@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-
 import screenmatch.model.DataEpisode;
+import screenmatch.model.Episode;
 import screenmatch.model.DataSeason;
 import screenmatch.model.DataSeries;
 import screenmatch.service.ConsumeApi;
@@ -51,9 +51,19 @@ System.out.println("Cinco Episodios mais bem avaliados: ");
                 .collect(Collectors.toList());
 
                 dataEpisodes.stream()
-                .sorted(Comparator.comparing(DataEpisode::imdbRating).reversed())
                 .filter(e -> !e.imdbRating().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DataEpisode::imdbRating).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+
+        List<Episode> episodes = seasons.stream()
+                .flatMap(t -> t.Episodes().stream()
+                        .map(d -> new Episode(t.Season(), d))
+                ).collect(Collectors.toList());
+                
+
+                episodes.forEach(System.out::println);
+
     }
 }
