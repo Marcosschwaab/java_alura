@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -100,5 +101,14 @@ System.out.println("Cinco Episodios mais bem avaliados: ");
                         .collect(Collectors.groupingBy(Episode::getSeason, Collectors.averagingDouble(Episode::getImdbRating)));
 
                         System.out.println("Avaliação média por temporada: " + reviewWithSeason); 
+
+
+                DoubleSummaryStatistics statistics = episodes.stream()
+                .filter(e -> e.getImdbRating() > 0.0)
+                .collect(Collectors.summarizingDouble(Episode::getImdbRating));
+                System.out.println("Média: " + statistics.getAverage());
+                System.out.println("Melhor episódio: " + statistics.getMax());
+                System.out.println("Pior episódio: " + statistics.getMin());
+                System.out.println("Quantidade: " + statistics.getCount());
     }
 }
