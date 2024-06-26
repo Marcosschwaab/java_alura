@@ -19,8 +19,13 @@ public class Episode {
         } catch (NumberFormatException ex) {
             this.imdbRating = 0.0;
         }
-        this.Released = LocalDate.parse(dataEpisode.Released());
-    }
+
+        try{
+            this.Released = LocalDate.parse(dataEpisode.Released());
+        } catch (Exception ex) {
+            this.Released = null;
+        }
+    } 
 
     public Integer getSeason() {
         return season;

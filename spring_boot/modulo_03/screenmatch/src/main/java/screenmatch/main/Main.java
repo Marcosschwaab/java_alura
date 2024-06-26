@@ -1,10 +1,14 @@
 package screenmatch.main;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import screenmatch.model.DataEpisode;
 import screenmatch.model.Episode;
@@ -64,6 +68,19 @@ System.out.println("Cinco Episodios mais bem avaliados: ");
                 
 
                 episodes.forEach(System.out::println);
+                System.out.println("A partir de de ano você deseja ver os episodios?");
+                var year = readScanner.nextInt();
+                
+                LocalDate date = LocalDate.of(year, 1 ,2);
 
+                DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                episodes.stream()
+                        .filter(e -> e.getReleased() != null && e.getReleased().isAfter(date))
+                        .forEach(e-> System.out.println(
+                        "Temporada: " + e.getSeason() +
+                        " Episódio: " + e.getTitle() +
+                            " Data lançamento: " + e.getReleased().format(formater)
+                        )
+                        );
     }
 }
