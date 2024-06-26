@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -93,5 +94,11 @@ System.out.println("Cinco Episodios mais bem avaliados: ");
                             " Data lançamento: " + e.getReleased().format(formater)
                         )
                         );
+
+                Map<Integer, Double> reviewWithSeason = episodes.stream()
+                        .filter(e -> e.getImdbRating() > 0.0)
+                        .collect(Collectors.groupingBy(Episode::getSeason, Collectors.averagingDouble(Episode::getImdbRating)));
+
+                        System.out.println("Avaliação média por temporada: " + reviewWithSeason); 
     }
 }
